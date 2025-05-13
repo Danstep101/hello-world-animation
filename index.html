@@ -4,13 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World Animation</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .text-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Правая половина — ярко-белая */
+        .white-half {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #ffffff;
+            z-index: 1;
+            animation: fadeOutWhite 2s 4s forwards;
+        }
+
+        /* Левая половина — чёрная */
+        .black-half {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #000;
+            z-index: 1;
+        }
+
+        /* Контейнер для текста */
+        .text-wrapper {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            animation:
+                slideUp 2s ease-out forwards,
+                moveRight 2s 2s ease-out forwards;
+        }
+
+        /* Текст — белый с чёрной обводкой (виден на любом фоне) */
+        .text {
+            font-family: Arial, sans-serif;
+            font-size: 6vw;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.1;
+            animation: textToImage 2s 4s forwards;
+            color: white; /* Белый текст */
+            text-shadow:
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000; /* Чёрная обводка */
+        }
+
+        /* Картинка, которая заполняет левую часть */
+        .image-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: url('https://images.wallpaperscraft.ru/image/single/gory_zakat_vid_sverhu_133061_1920x1080.jpg') center/cover;
+            animation: expandImage 2s 4s ease-out forwards;
+            z-index: 1;
+        }
+
+        /* Анимации */
+        @keyframes slideUp {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes moveRight {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(50%); }
+        }
+
+        @keyframes fadeOutWhite {
+            0% { opacity: 1; background: #ffffff; }
+            100% { opacity: 0; background: #000; }
+        }
+
+        @keyframes expandImage {
+            0% { width: 0; }
+            100% { width: 50%; }
+        }
+
+        @keyframes textToImage {
+            0% {
+                color: white;
+                -webkit-text-fill-color: white;
+                background: transparent;
+                text-shadow:
+                    -1px -1px 0 #000,
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;
+            }
+            100% {
+                color: transparent;
+                -webkit-text-fill-color: transparent;
+                background: url('https://images.wallpaperscraft.ru/image/single/gory_zakat_vid_sverhu_133061_1920x1080.jpg') center/cover;
+                -webkit-background-clip: text;
+                background-clip: text;
+                text-shadow: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="text-container">
         <div class="white-half"></div>
         <div class="black-half"></div>
-        <div class="text">HELLO WORLD</div>
+        <div class="text-wrapper">
+            <div class="text">HELLO,</div>
+            <div class="text">WORLD</div>
+        </div>
         <div class="image-fill"></div>
     </div>
 </body>
